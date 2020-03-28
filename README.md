@@ -24,10 +24,15 @@ The screen output of the program shows the shortest path from the source node to
 Shortest path from Node A to:
 
 Node B: A -> B (total distance = 10)
+
 Node C: A -> C (total distance = 20)
+
 Node D: A -> C -> D (total distance = 40)
+
 Node E: A -> B -> E (total distance = 20)
+
 Node F: A -> B -> E -> F (total distance = 21)
+
 Node G: unreachable
 
 
