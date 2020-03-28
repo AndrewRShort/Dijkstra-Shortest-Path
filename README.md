@@ -17,7 +17,9 @@ When writing any Jack program in the Jack OS environment, there are of course so
 
 Other than these issues, writing code in Jack felt normal and fun, like any other high level language. It's quite a powerful language. After all, the Jack OS is written in Jack.
 
-I decided the easiest way to try out different source nodes or differnet graphs entirely is to edit the source code directly. If you look at Main.jack, it is self-explanatory. You can define a node and directed edges and add the nodes to the graph. Between nodes you can have 1-way or 2-way direction, simply by adding the appropriate edges to the appropriate nodes.  You can also see in Main.jack how to specify the source node.  The screen output of the program shows the shortest path to all other nodes, and will indicate if a node is unreachable from the source node.  Here is sample output:
+I decided the easiest way to experiment with different source nodes or different graphs entirely is to edit the source code directly. If you look at Main.jack, it is self-explanatory. You can define a node and directed edges and add the nodes to the graph. Between nodes you can have 1-way or 2-way direction, simply by adding the appropriate edges to the appropriate nodes.  You can also see in Main.jack how to specify the source node.  
+
+The screen output of the program shows the shortest path from the source node to all other nodes (and the total distance for each), and will indicate if a node is unreachable from the source node.  Here is sample output:
 
 Shortest path from Node A to:
 
