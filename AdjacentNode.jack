@@ -1,0 +1,37 @@
+class AdjacentNode {
+
+    field GraphNode graphNode;  
+    field int edgeDistance;
+    
+    // constructor
+    constructor AdjacentNode new(GraphNode graphNodeArg, int edgeDistanceArg) {
+
+	let graphNode = graphNodeArg;
+	let edgeDistance = edgeDistanceArg;
+	return this;
+    }
+
+    // getter
+    method GraphNode graphNode() {
+	return graphNode;
+    }
+
+    // getter
+    method int edgeDistance() {
+	return edgeDistance;
+    }
+
+    method void dispose() {
+
+      // graphNode is a pointer to a node in the graph
+      // don't dispose the graphNode here. It would be a double-free.
+      // (See Graph class, dispose method)
+
+      // dispose this instance
+      do Memory.deAlloc(this);
+
+      //do OutputUtil.printStringConstLn("AdjacentNode disposed"); 
+
+      return;
+   }
+}

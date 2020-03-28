@@ -1,0 +1,69 @@
+class StringUtil {
+
+    // return a new string that is a copy of s
+    function String copy(String s) {
+
+	var String newS;
+	var int length, i;
+
+	if (s = null) {
+	    do OutputUtil.printStringConstLn("StringUtil.copy error: string is null");
+            do Sys.error(0); 
+	}
+	
+	let i = 0;
+	let length = s.length();
+	let newS = String.new(length);
+	
+	while (i < length) {
+	    do newS.appendChar(s.charAt(i));
+	    let i = i + 1;
+	}
+	
+	return newS;
+    }
+
+    // return a new string that is the concatenation of s1 and s2
+    // dispose either argument 1 or argument 2 or neither or both, based on disposeFlags
+    // This allows Jack programs to do string concatenation without leaking.
+    function String concatAndDispose(String s1, String s2, int disposeFlags) {
+
+	var String newS;
+	var int length1, length2, i;
+
+	if ((s1 = null) | (s2 = null)) {
+	    do OutputUtil.printStringConstLn("StringUtil.concatAndDispose error: string is null");
+            do Sys.error(0); 
+	}
+
+	let i = 0;
+	let length1 = s1.length();
+	let length2 = s2.length();
+
+	let newS = String.new(length1 + length2);
+
+	while (i < length1) {
+	    do newS.appendChar(s1.charAt(i));
+	    let i = i + 1;
+	}
+	let i = 0;
+	while (i < length2) {
+	    do newS.appendChar(s2.charAt(i));
+	    let i = i + 1;
+	}
+
+	// dispose the specified argument(s), based on disposeFlags:
+	// 0 = dispose nothing
+	// 1 = dispose s1
+	// 2 = dispose s2
+	// 3 = dispose both
+	if ((disposeFlags & 1) = 1) {
+	    do s1.dispose();
+	}
+	if ((disposeFlags & 2) = 2) {
+	    do s2.dispose();
+	}
+
+	return newS;
+    }
+}

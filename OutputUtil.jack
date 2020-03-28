@@ -1,0 +1,34 @@
+class OutputUtil {
+
+    /*
+       used to print a string constant "foo" without leaking,
+       because in Jack, Output.printString("foo") is a leak,
+       and to avoid the leak, you could do:
+
+     		let str = "foo";
+     		do Output.printString(str);
+    		do str.dispose();
+
+       so this utility function makes this easier.
+
+       also this prints a newline after the string
+
+       example usage:
+       do OutputUtil.printStringConstLn("foo");
+
+    */
+
+    function void printStringConstLn(String s) {
+
+	if (s = null) {
+	    do OutputUtil.printStringConstLn("OutputUtil.printStringConstLn error: string is null");
+            do Sys.error(0); 
+	}
+
+	do Output.printString(s);
+	do Output.println();
+	do s.dispose();
+	return;
+    }
+}
+

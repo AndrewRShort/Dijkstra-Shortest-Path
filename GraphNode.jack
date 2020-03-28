@@ -1,0 +1,130 @@
+class GraphNode {
+
+    field String name;
+    field GraphNode previous;
+    field int distance; 
+    field boolean settled; 
+    field LinkedList adjacentNodes; 
+
+    // constructor
+    constructor GraphNode new(String nameArg) {
+
+	let name = nameArg; 
+	let previous = null;
+	let distance = MathUtil.MAX_INT();  
+	let settled = false;
+	let adjacentNodes = LinkedList.new();
+
+	return this;
+    }
+
+    method void addDestination(GraphNode graphNode, int edgeDistance) {
+
+	var AdjacentNode adjacentNode;
+
+	let adjacentNode = AdjacentNode.new(graphNode, edgeDistance);
+	
+	do adjacentNodes.insert(adjacentNode);
+
+	return;
+    }
+
+    method String shortestPath() {
+        
+        // e.g. if this node is F, return "A -> B -> D -> F"
+
+	var String arrow, result;  
+	var GraphNode graphNode;   
+
+        let result = StringUtil.copy(name); 
+	let arrow = " -> ";
+        let graphNode = this;
+        
+        // traverse the path backwards, from this node back to the sourceNode
+        // (since we are going backward, build the string by prepending, not appending)
+        while (~(graphNode.previous() = null)) {
+
+            let graphNode = graphNode.previous();
+
+            // set result to graphNode.name + " -> " + result
+	    // note that the result arg is disposed each time
+	    let result = StringUtil.concatAndDispose(arrow, result, 2);   
+	    let result = StringUtil.concatAndDispose(graphNode.name(), result, 2);
+	    
+        }
+	do arrow.dispose();
+        return result;
+    }
+
+    // getter
+    method String name() {
+	return name;
+    }
+
+    // getter
+    method GraphNode previous() {
+	return previous;
+    }
+
+    // getter
+    method int distance() {
+	return distance;
+    }
+
+    // getter
+    method LinkedList adjacentNodes() {
+	return adjacentNodes;
+    }
+
+    // getter
+    method boolean settled() {
+	return settled;
+    }
+
+    // setter
+    method void setDistance(int distanceArg) {
+	let distance = distanceArg;
+	return;
+    }
+
+    // setter
+    method void setSettled(boolean settledArg) {
+	let settled = settledArg;
+	return;
+    }
+
+    // setter
+    method void setPrevious(GraphNode previousArg) {
+	let previous = previousArg;
+	return;
+    }
+
+    method void dispose() {
+
+	var LLNode current;
+	var AdjacentNode data;	
+
+	// dispose name
+	// (normally the owner, Main class, would dispose the name, but it's easier here)
+	do name.dispose();
+
+        // dispose each AdjacentNode by traversing the linked list 
+	let current = adjacentNodes.head();
+	
+	while (~(current = null)) { 
+	    let data = current.data();
+	    do data.dispose(); 
+            let current = current.next(); 
+        } 
+
+	// dispose the linked list
+	do adjacentNodes.dispose(); 
+
+	// dispose this instance
+	do Memory.deAlloc(this);
+
+        //do OutputUtil.printStringConstLn("GraphNode disposed"); 
+
+	return;
+    }
+}

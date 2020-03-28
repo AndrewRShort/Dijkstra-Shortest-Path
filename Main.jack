@@ -1,0 +1,61 @@
+class Main {
+
+    function void main() {
+
+	var GraphNode nodeA, nodeB, nodeC, nodeD, nodeE, nodeF, nodeG;
+	var Graph graph;
+	var Dijkstra dijkstra;
+
+	// create nodes for the graph
+	let nodeA = GraphNode.new("A");
+	let nodeB = GraphNode.new("B");
+	let nodeC = GraphNode.new("C");
+	let nodeD = GraphNode.new("D");
+	let nodeE = GraphNode.new("E");
+	let nodeF = GraphNode.new("F");
+	let nodeG = GraphNode.new("G");
+
+	// connect the nodes together, with specified edge distances
+
+        do nodeA.addDestination(nodeB, 10);
+        do nodeA.addDestination(nodeC, 20);
+
+        do nodeB.addDestination(nodeD, 50);
+        do nodeB.addDestination(nodeE, 10);
+
+        do nodeC.addDestination(nodeD, 20);
+        do nodeC.addDestination(nodeE, 33);
+
+        do nodeD.addDestination(nodeE, 20);
+        do nodeD.addDestination(nodeF, 2);
+        
+        do nodeE.addDestination(nodeF, 1);
+
+        // create the graph and add the nodes to it
+        let graph = Graph.new();
+
+        do graph.addNode(nodeA);
+        do graph.addNode(nodeB);
+        do graph.addNode(nodeC);
+        do graph.addNode(nodeD);
+        do graph.addNode(nodeE);
+        do graph.addNode(nodeF);
+        do graph.addNode(nodeG);
+
+        // set sourceNode to any node in the graph, let's say nodeA
+        let dijkstra = Dijkstra.new(graph, nodeA);  
+        
+        // run the Dijkstra algorithm
+	// (for each node in the graph, update 'distance' and 'previous' fields)
+        do dijkstra.calcShortestPath();
+        
+        // output the results
+        do dijkstra.outputResults();
+
+	// dispose everything
+	do graph.dispose();	// also disposes all the GraphNodes
+	do dijkstra.dispose();
+
+	return;
+    }
+}

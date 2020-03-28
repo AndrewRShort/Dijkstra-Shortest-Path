@@ -1,0 +1,53 @@
+class LLNode {
+
+    field int data;    		// data is anything, including pointer to object
+    field LLNode next, prev;	// prev is for doubly linked list
+
+    // constructor
+    constructor LLNode new(int dataArg) { 
+	
+	let data = dataArg;
+	let next = null;
+	let prev = null;
+	return this;
+    }
+
+    // getter
+    method LLNode next() {
+	return next;
+    }
+
+    // getter
+    method LLNode prev() {
+	return prev;
+    }
+
+    // getter
+    method int data() { 
+	return data;
+    }
+
+    // setter
+    method void setNext(LLNode llNode) {
+	let next = llNode;
+	return;
+    }
+
+    // setter
+    method void setPrev(LLNode llNode) {
+	let prev = llNode;
+	return;
+    }
+
+    method void dispose() {
+
+	// (the data is disposed by its owner)
+
+	// dispose this instance
+	do Memory.deAlloc(this);
+
+	//do OutputUtil.printStringConstLn("LLNode disposed"); 
+
+	return;
+    }
+}

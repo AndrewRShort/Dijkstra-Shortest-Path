@@ -1,0 +1,199 @@
+class Dijkstra {
+
+    field LinkedList unsettledNodes;
+    field Graph graph;
+    field GraphNode sourceNode;
+
+    // constructor
+    constructor Dijkstra new(Graph graphArg, GraphNode sourceNodeArg) {
+
+	var LinkedList graphNodes;
+	var LLNode current;
+	var GraphNode data;	
+
+	let graph = graphArg; 
+	let sourceNode = sourceNodeArg;
+	let unsettledNodes = LinkedList.new();
+
+        // set the total distance from the sourceNode to itself to 0
+        // this effectively makes it the sourceNode as far as the algorithm is concerned
+        // (all other nodes have default MAX_INT total distance)
+        do sourceNode.setDistance(0);
+
+        // iterate through the nodes of the graph and add them all to unsettledNodes
+        // (the 'settled' field of each node has already defaulted to false)
+	
+	let graphNodes = graph.graphNodes();
+	let current = graphNodes.head();
+	
+	while (~(current = null)) { 
+	    let data = current.data();
+	    do unsettledNodes.insert(data);
+            let current = current.next(); 
+        } 
+
+	return this;
+    }
+
+    method void calcShortestPath() {
+
+	var LLNode currentLLNode;
+	var GraphNode currentNode;
+
+	var LinkedList adjacentNodes;
+	var LLNode current;
+	var AdjacentNode data;
+	var GraphNode graphNode;
+	var int edgeDistance, testDistance;
+
+        // while we have unsettled nodes
+	while (~(unsettledNodes.isEmpty())) {
+
+	     // from among the unsettled nodes, choose the node with the 
+	     //	   lowest total distance from the source
+             // initially, this will be the sourceNode (since it was 
+	     //	   initialized with a total distance of 0)
+	     let currentLLNode = minDistanceLLNode();
+
+	     if (currentLLNode = null) {
+             	// there is no path from the sourceNode to the remaining unsettled node(s),
+                // so we are done
+		return;
+	     }
+
+	     let currentNode = currentLLNode.data();
+
+	     // loop through all the adjacent nodes of the currentNode
+	     let adjacentNodes = currentNode.adjacentNodes();  
+	     let current = adjacentNodes.head();
+
+	     while (~(current = null)) { 
+		let data = current.data();
+		let graphNode = data.graphNode();
+		let edgeDistance = data.edgeDistance();
+
+		// if the adjacent node is unsettled
+		if (~(graphNode.settled())) {
+		    // possibly update the total distance to the adjacent node
+		    //   (and possibly update previous node)
+		    let testDistance = currentNode.distance() + edgeDistance;
+		    if (testDistance < graphNode.distance()) {
+			// reset the total distance to the adjacent node
+			do graphNode.setDistance(testDistance);
+
+			// reset previous node
+			do graphNode.setPrevious(currentNode);
+		    }
+		}
+	        
+                let current = current.next(); 
+             } 
+
+	     // now that we have looped through all the adjacent nodes,
+             // set the currentNode to be settled and remove it from unsettledNodes
+             do currentNode.setSettled(true);
+             do unsettledNodes.remove(currentLLNode); 
+	}
+
+	return;
+    }
+
+    // from the unsettledNodes, returns the LLNode with the min total distance from the source
+    method LLNode minDistanceLLNode() {
+
+	var LLNode current;
+	var GraphNode data;	
+
+	var LLNode minDistanceLLNode;
+	var int minDistance;
+
+	let minDistanceLLNode = null;
+	let minDistance = MathUtil.MAX_INT();
+
+	let current = unsettledNodes.head();
+
+	// traverse the linked list
+	while (~(current = null)) { 
+	    let data = current.data();
+	    if (data.distance() < minDistance) {
+	 	let minDistance = data.distance();
+		let minDistanceLLNode = current;
+	    }
+            let current = current.next(); 
+        } 
+	
+	// returns null if all the unsettled distances are MAX_INT
+	return minDistanceLLNode;
+    }
+
+    method void outputResults() {
+
+	var LinkedList graphNodes;
+	var LLNode current;
+	var GraphNode data;	
+	var String str, distanceStr;
+
+	// maxLength is 5 chars (MAX_INT-1 number of chars = 5. See MathUtil class)
+	let distanceStr = String.new(5); 
+
+	let str = "Shortest path from Node ";
+	let str = StringUtil.concatAndDispose(str, sourceNode.name(), 1);
+	let str = StringUtil.concatAndDispose(str, " to:", 3);
+	do Output.printString(str);
+	do Output.println();
+	do Output.println();
+	do str.dispose();
+
+	let graphNodes = graph.graphNodes();
+	let current = graphNodes.head();
+
+	// iterate through the nodes and output the name, shortest path, 
+	//	and total distance to each node
+	while (~(current = null)) { 
+
+	    let data = current.data();
+
+	    // skip the source node (don't have to, but it's dumb to show it)
+	    if (~(data = sourceNode)) {
+		let str = "Node ";
+		let str = StringUtil.concatAndDispose(str, data.name(), 1);
+		let str = StringUtil.concatAndDispose(str, ": ", 3);
+	    	
+		if (data.settled()) {
+		    let str = StringUtil.concatAndDispose(str, data.shortestPath(), 3);
+		    let str = StringUtil.concatAndDispose(str, " (total distance = ", 3);
+		    do distanceStr.setInt(data.distance()); 
+		    let str = StringUtil.concatAndDispose(str, distanceStr, 1);
+		    let str = StringUtil.concatAndDispose(str, ")", 3);
+		} else {
+		    // unreachable node from sourceNode
+		    let str = StringUtil.concatAndDispose(str, "unreachable", 3);
+		}
+		do Output.printString(str);
+		do Output.println();
+	 	do str.dispose();
+	    }
+
+	    let current = current.next(); 
+        } 
+
+	do distanceStr.dispose();
+
+	return;
+    }
+
+    method void dispose() {
+	
+	// (the GraphNodes are already disposed by the Graph class: dispose method)
+
+	// dispose the linked list
+	do unsettledNodes.dispose(); 
+
+	// dispose this instance
+	do Memory.deAlloc(this);
+
+        //do OutputUtil.printStringConstLn("Dijkstra disposed"); 
+
+	return;
+    }
+}

@@ -1,0 +1,50 @@
+class Graph {
+
+    field LinkedList graphNodes;
+
+    // constructor
+    constructor Graph new() {
+
+	let graphNodes = LinkedList.new();
+	return this;
+    }
+
+    // add graph node 
+    method void addNode(GraphNode graphNode) {
+	
+	// use insertAtEnd here to preserve the order of the graph nodes,
+	// this way the output on the screen is the same order as the insertion
+	do graphNodes.insertAtEnd(graphNode);
+	return;
+    }
+
+    // getter
+    method LinkedList graphNodes() {
+	return graphNodes;
+    }
+
+    method void dispose() {
+
+	var LLNode current;
+	var GraphNode data;	
+
+        // dispose each GraphNode by traversing the linked list 
+	let current = graphNodes.head();
+	
+	while (~(current = null)) { 
+	    let data = current.data();
+	    do data.dispose(); 
+            let current = current.next(); 
+        } 
+
+	// dispose the linked list
+        do graphNodes.dispose();
+
+	// dispose this instance
+        do Memory.deAlloc(this);
+
+        //do OutputUtil.printStringConstLn("Graph disposed"); 
+
+        return;
+   }
+}

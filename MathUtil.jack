@@ -1,0 +1,6 @@
+class MathUtil {
+
+    function int MAX_INT() {
+	return 32767;
+    }
+}

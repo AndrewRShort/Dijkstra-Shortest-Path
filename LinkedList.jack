@@ -1,0 +1,120 @@
+class LinkedList {
+
+    field LLNode head;		
+
+    // constructor
+    constructor LinkedList new() {
+
+	let head = null;
+	return this;
+    }
+
+    // insert a new LLNode at the front of the list, containing data
+    // this is fast because there is no traversal
+    method void insert(int data) {  
+
+	var LLNode llNode;
+
+	// create a LLNode with the data
+	let llNode = LLNode.new(data);
+
+	// set new node's next
+	// (llNode's prev field is set to null already)
+	do llNode.setNext(head);
+	
+	// set prev of head node to new node
+	if (~(head = null)) {
+	    do head.setPrev(llNode);
+	}
+
+	// set the head to the new node
+	let head = llNode;
+
+    	return;
+    }
+
+    // insert a new LLNode at the end of the list, containing data
+    // this is slow, as it requires traversal
+    method void insertAtEnd(int data) {
+
+	var LLNode llNode, temp;
+
+	// create a LLNode with the data
+	// (llNode's prev and next fields are set to null)
+	let llNode = LLNode.new(data);
+
+	if (head = null) {
+	    let head = llNode;
+	} else {
+	    let temp = head;
+	    while (~(temp.next() = null)) {
+		let temp = temp.next();
+	    }
+	    do temp.setNext(llNode);
+	    do llNode.setPrev(temp);
+	}
+
+    	return;
+    }
+
+    // remove llNode from the list
+    method void remove(LLNode llNode) {
+
+	var LLNode prev, next;
+
+	let prev = llNode.prev();
+	let next = llNode.next();
+
+	// are we removing the head?
+	if (llNode = head) {
+	    let head = next;
+	}
+
+	if (~(next = null)) {
+	    do next.setPrev(prev);
+	}
+
+	if (~(prev = null)) {
+	    do prev.setNext(next);
+	}
+
+	do llNode.dispose();
+
+	return;
+    }
+
+    method boolean isEmpty() {
+	return (head = null);
+    }
+
+    // getter
+    method LLNode head() {
+	return head;
+    }
+
+    method void dispose() {
+
+        // recursively dispose tail until all nodes disposed
+	// (the linked list might be empty, so check for that)
+	if (~(head = null)) {
+            do disposeTail(head);  
+	}   
+
+	// dispose this instance
+	do Memory.deAlloc(this);
+
+	//do OutputUtil.printStringConstLn("LinkedList disposed"); 
+
+	return;
+   }
+
+   method void disposeTail(LLNode current) {
+	
+	if (~(current.next() = null)) {
+            do disposeTail(current.next());
+        }
+	do current.dispose(); // see LLNode class
+        
+        return;
+   }
+}
