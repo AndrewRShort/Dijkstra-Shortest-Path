@@ -1,11 +1,11 @@
 # Dijkstra-Shortest-Path
 Dijkstra Shortest Path: Jack source code. 
 
-This project is an implementation of Dijkstra's shortest path algorithm, which is used to find the shortest path from a source node to all other nodes in a graph. A classic example is mapping software that find the shortest route between 2 cities. 
+This project is an implementation of Dijkstra's shortest path algorithm, which is used to find the shortest path from a source node to all other nodes in a graph. A classic example is mapping software that finds the shortest route between 2 cities. 
 
 The project is written in the Jack language, a high-level object-oriented language. You must have taken the Coursera online courses "nand2tetris" parts 1 and 2, in which you write your own Jack compiler.
 
-The Jack compiler compiles Jack source code to VM (virtual machine) code.   You can run the VM code in the VM Emulator provided by the nand2tetris tool set.  Or, assuming you have written your VM Translator to translate to highly optimized Hack Assembly code, you could use your VMTranslator to translate your VM code to Hack Assembly and then run the Hack program in the supplied CPUEmulator.  And furthermore, you could use the Hack Assembler you wrote to translate the Hack Assembly to Hack machine language, and run it in the CPUEmulator.
+The Jack compiler compiles Jack source code to VM (virtual machine) code.   You can run the VM code in the VM Emulator provided by the nand2tetris tool set.  Or, assuming you have written your VM Translator to translate to highly optimized Hack Assembly code, you could run the Hack Assembly program in the supplied CPUEmulator.  And furthermore, you could use the Hack Assembler you wrote to translate the Hack Assembly to Hack machine language, and run it in the CPUEmulator.
 
 In writing Dijkstra's shortest path algorithm in Jack, I decided to create my own linked-list class and use that in various parts of the program. It's a simple data structure that is easy to implement and understand.
 
