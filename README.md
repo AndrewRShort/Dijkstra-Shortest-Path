@@ -5,7 +5,7 @@ This project is an implementation of Dijkstra's shortest path algorithm, which i
 
 The project is written in the Jack language, a high-level object-oriented language. You must have taken the Coursera online courses "nand2tetris" parts 1 and 2, in which you write your own Jack compiler.
 
-The Jack compiler compiles Jack source code to VM (virtual machine) code.   You can run the VM code in the VM Emulator provided by the nand2tetris tool set.  Or, assuming you have written your VM Translator to translate to highly optimized Hack Assembly code, you could run the Hack Assembly program in the supplied CPUEmulator.  And furthermore, you could use the Hack Assembler you wrote to translate the Hack Assembly to Hack machine language, and run it in the CPUEmulator.
+The Jack compiler compiles Jack source code to VM (virtual machine) code.   You can run the VM code in the VM Emulator provided by the nand2tetris tool set.  Or, assuming you have written your VM Translator to translate to highly optimized Hack Assembly code, you could run the Hack Assembly program in the supplied CPU Emulator.  And furthermore, you could use the Hack Assembler you wrote to translate the Hack Assembly to Hack machine language, and run it in the CPU Emulator.
 
 In writing Dijkstra's shortest path algorithm in Jack, I decided to create my own linked-list class and use that in various parts of the program. It's a simple data structure that is easy to implement and understand.
 
