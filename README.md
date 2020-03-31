@@ -36,6 +36,8 @@ Node F: A -> B -> E -> F (total distance = 21)
 Node G: unreachable
 
 
+
+--------------------
 ** Note: there are many example implementations of this algorithm online. The one I borrowed from the most was:
 https://www.baeldung.com/java-dijkstra
 
