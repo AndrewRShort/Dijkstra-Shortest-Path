@@ -94,11 +94,17 @@ class LinkedList {
 
     method void dispose() {
 
-        // recursively dispose tail until all nodes disposed
-	// (the linked list might be empty, so check for that)
-	if (~(head = null)) {
-            do disposeTail(head);  
-	}   
+	// This could be done recursively, but using the call stack is expensive,
+	// and risks a stack overflow if there are thousands of nodes.
+	// So, this routine is intentionally iterative. 
+
+	var LLNode tmp;
+
+	while (~(head = null)) {
+	    let tmp = head;
+	    let head = head.next();
+	    do tmp.dispose();  // see LLNode class
+	}
 
 	// dispose this instance
 	do Memory.deAlloc(this);
@@ -106,15 +112,5 @@ class LinkedList {
 	//do OutputUtil.printStringConstLn("LinkedList disposed"); 
 
 	return;
-   }
-
-   method void disposeTail(LLNode current) {
-	
-	if (~(current.next() = null)) {
-            do disposeTail(current.next());
-        }
-	do current.dispose(); // see LLNode class
-        
-        return;
    }
 }
